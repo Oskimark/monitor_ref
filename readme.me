@@ -1,0 +1,63 @@
+.
+
+🛠️ Resumen del Proyecto: Monitor de Refrigeración "OmniData"
+¿Qué es?
+Es un datalogger técnico y sistema de telemetría de ultra-baja escala basado en el chip ESP8266 (Wemos D1 Mini). Está diseñado específicamente para el diagnóstico de sistemas de refrigeración, permitiendo monitorear presiones, temperaturas y consumos eléctricos en tiempo real.
+
+¿Qué hace?
+Triple Sensado: Captura datos de tres puntos críticos (Ambiente, Evaporador, Condensador) mediante sensores digitales DS18B20.
+
+Doble Capa de Almacenamiento: Envía datos a la nube (ThingSpeak) para análisis histórico y, en paralelo, gestiona un historial local para visualización rápida.
+
+Interfaz Híbrida: Posee una pantalla OLED física para lectura en sitio y un Web Server interno para configuración y monitoreo remoto desde cualquier smartphone o PC vía WiFi.
+
+Autonomía de Arranque: Cuenta con un modo de "Rescate" que, tras 10 segundos de espera, inicia el monitoreo automáticamente si no se recibe configuración manual, ideal para recuperaciones tras cortes de luz.
+
+Partes del Sistema
+Cerebro: Wemos D1 Mini (ESP8266).
+
+Visualización: Pantalla OLED SSD1306 128x32 (I2C).
+
+Sensores: 3x DS18B20 (OneWire) + INA219 (Consumo/Voltaje I2C).
+
+Memoria Externa: W25Q64 (8MB Flash SPI) para logs de larga duración sin WiFi.
+
+🚀 Plan de Mejoras (To-Do List)
+Para llevar el proyecto al siguiente nivel, estas son las áreas de evolución:
+
+1. Pantalla OLED (UI/UX)
+Ejes Dinámicos: Implementar etiquetas de texto en la gráfica que muestren el valor máximo y mínimo del eje Y actual.
+
+Modos de Visualización: Botón físico o táctil para rotar entre:
+
+Modo Gráfica: Línea de tendencia.
+
+Modo Big-Numbers: Solo los 3 valores de temperatura en fuente grande.
+
+Modo Info: Estado de señal WiFi, batería y memoria libre.
+
+2. Web Server 2.0 (Monitor Avanzado)
+Gráficos Profesionales: Implementar la librería Chart.js o Google Charts en la web. Esto permitirá ver gráficos de área, con zoom y múltiples líneas (una por sonda) con colores distintos.
+
+Consola de Diagnóstico: Una sección que liste los IDs únicos de cada sensor detectado para poder asignarles nombres (ej: "Sonda Freezer", "Sonda Retorno").
+
+Gestión de Periféricos: * Indicador de nivel de batería (si se usa Li-Po).
+
+Estado de salud de la memoria W25Q64.
+
+3. Control de Almacenamiento Local
+File Manager: Opción en la web para descargar los datos guardados en la memoria Flash en formato CSV (compatible con Excel).
+
+Wipe Memory: Botón de "Formatear Memoria" con confirmación de seguridad para limpiar los logs viejos antes de un nuevo servicio técnico.
+
+4. Configuración Remota Total
+Calibración: Poder setear un "Offset" por software (ej: si una sonda miente por 0.5°C, corregirlo desde la web).
+
+Alertas: Configurar umbrales de temperatura. Si la Sonda 2 sube de 10°C, que el Wemos haga parpadear la pantalla o envíe una notificación por Pushsafer o Telegram.
+
+📋 Próximos Pasos Técnicos
+Para la siguiente fase, deberíamos trabajar en la integración de Chart.js en el servidor. Esto hará que cuando entres a la IP desde tu celular, veas algo así:
+
+¿Por dónde te gustaría empezar la expansión? 1. Mejorar la visualización OLED (más datos en la gráfica).
+2. Implementar los gráficos bonitos en el Web Server.
+3. El sistema de borrado y gestión de la memoria W25Q64.
