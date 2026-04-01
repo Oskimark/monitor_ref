@@ -336,7 +336,36 @@
                 maintainAspectRatio: false,
                 interaction: { intersect: false, mode: 'index' },
                 plugins: {
-                    legend: { labels: { color: '#8b949e', usePointStyle: true, boxWidth: 10 } },
+                    legend: {
+                        labels: {
+                            color: '#8b949e',
+                            usePointStyle: true,
+                            boxWidth: 10,
+                            generateLabels: (chart) => {
+                                return chart.data.datasets.map((ds, i) => ({
+                                    text: ds.label,
+                                    fillStyle: chart.isDatasetVisible(i) ? ds.borderColor : 'transparent',
+                                    strokeStyle: ds.borderColor,
+                                    lineWidth: 2,
+                                    hidden: !chart.isDatasetVisible(i),
+                                    index: i,
+                                    pointStyle: 'circle',
+                                    fontColor: '#8b949e'
+                                }));
+                            }
+                        },
+                        onClick: (e, legendItem, legend) => {
+                            const index = legendItem.index;
+                            const ci = legend.chart;
+                            if (ci.isDatasetVisible(index)) {
+                                ci.hide(index);
+                                legendItem.hidden = true;
+                            } else {
+                                ci.show(index);
+                                legendItem.hidden = false;
+                            }
+                        }
+                    },
                     tooltip: { backgroundColor: 'rgba(22, 27, 34, 0.9)', borderColor: '#30363d', borderWidth: 1, padding: 10, cornerRadius: 4 }
                 },
                 scales: {
