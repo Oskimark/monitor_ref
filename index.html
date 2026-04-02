@@ -113,6 +113,15 @@
             opacity: 1;
         }
 
+        .view-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 8px;
+            min-width: 0;
+            /* Fix flex shrink issue */
+        }
+
         .header {
             height: 50px;
             display: flex;
@@ -138,7 +147,6 @@
         }
 
         .main-content {
-            margin-left: 8px;
             flex: 1;
             padding: 10px;
             overflow-y: auto;
@@ -226,71 +234,72 @@
             v2.5 Final Build
         </div>
     </nav>
-
-    <div class="header">
-        <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
-            <span class="material-icons">menu</span>
-        </button>
-        <span class="material-icons" style="color:var(--accent)">refrigerator</span>
-        <h2 style="margin:0; font-size:1.2rem; flex:1">Telemetry</h2>
-        <select id="range" class="range-picker" onchange="refresh()">
-            <option value="30">Live (10m)</option>
-            <option value="60">Last 1h</option>
-            <option value="360">Last 6h</option>
-            <option value="720">Last 12h</option>
-            <option value="1440">Last 24h</option>
-        </select>
-    </div>
-
-    <div class="main-content">
-        <!-- Dashboard Pane -->
-        <div id="pane-dash" class="pane active">
-            <div id="status" class="badge" style="margin-bottom:10px; display:inline-block">CONECTADO</div>
-
-            <div class="grid">
-                <div class="card">
-                    <div class="lab" id="l1">externo</div>
-                    <div class="val" id="v1" style="color:#32d1ff">--.-°C</div>
-                </div>
-                <div class="card">
-                    <div class="lab" id="l2">mac</div>
-                    <div class="val" id="v2" style="color:#ff9d0a">--.-°C</div>
-                </div>
-                <div class="card">
-                    <div class="lab" id="l3">taller</div>
-                    <div class="val" id="v3" style="color:#f85149">--.-°C</div>
-                </div>
-                <div class="card">
-                    <div class="lab">Main Power</div>
-                    <div class="val" id="vp">0W</div>
-                    <div class="val-sub" id="vvi">0.00V | 0A</div>
-                </div>
-            </div>
-
-            <div class="card" style="height: 480px; padding:15px">
-                <div style="height: 100%"><canvas id="mainChart"></canvas></div>
-            </div>
+    <div class="view-container">
+        <div class="header">
+            <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+                <span class="material-icons">menu</span>
+            </button>
+            <span class="material-icons" style="color:var(--accent)">refrigerator</span>
+            <h2 style="margin:0; font-size:1.2rem; flex:1">Telemetry</h2>
+            <select id="range" class="range-picker" onchange="refresh()">
+                <option value="30">Live (10m)</option>
+                <option value="60">Last 1h</option>
+                <option value="360">Last 6h</option>
+                <option value="720">Last 12h</option>
+                <option value="1440">Last 24h</option>
+            </select>
         </div>
 
-        <!-- Config Pane -->
-        <div id="pane-config" class="pane">
-            <h2>⚙️ Configuración del Espejo</h2>
-            <div class="card">
-                <h3>Credenciales de ThingSpeak</h3>
-                <p style="color: #8b949e; font-size: 0.9rem">Introduce tus datos de canal para habilitar la
-                    visualización remota.</p>
+        <div class="main-content">
+            <!-- Dashboard Pane -->
+            <div id="pane-dash" class="pane active">
+                <div id="status" class="badge" style="margin-bottom:10px; display:inline-block">CONECTADO</div>
 
-                <label class="lab">Channel ID</label>
-                <input type="text" id="tsId" placeholder="Ej: 1234567">
+                <div class="grid">
+                    <div class="card">
+                        <div class="lab" id="l1">externo</div>
+                        <div class="val" id="v1" style="color:#32d1ff">--.-°C</div>
+                    </div>
+                    <div class="card">
+                        <div class="lab" id="l2">mac</div>
+                        <div class="val" id="v2" style="color:#ff9d0a">--.-°C</div>
+                    </div>
+                    <div class="card">
+                        <div class="lab" id="l3">taller</div>
+                        <div class="val" id="v3" style="color:#f85149">--.-°C</div>
+                    </div>
+                    <div class="card">
+                        <div class="lab">Main Power</div>
+                        <div class="val" id="vp">0W</div>
+                        <div class="val-sub" id="vvi">0.00V | 0A</div>
+                    </div>
+                </div>
 
-                <label class="lab">Read API Key</label>
-                <input type="password" id="tsKey" placeholder="Tu API Key de Lectura">
-                <hr style="border:0; border-top:1px solid var(--border); margin:20px 0;">
-                <h3>Alias de Sensores</h3>
-                <label class="lab">Sensor 1 (L1)</label><input type="text" id="alias1" placeholder="Ej: Externo">
-                <label class="lab">Sensor 2 (L2)</label><input type="text" id="alias2" placeholder="Ej: Mac">
-                <label class="lab">Sensor 3 (L3)</label><input type="text" id="alias3" placeholder="Ej: Taller">
-                <button class="btn" onclick="applySettings()">Guardar y Conectar</button>
+                <div class="card" style="height: 480px; padding:15px">
+                    <div style="height: 100%"><canvas id="mainChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Config Pane -->
+            <div id="pane-config" class="pane">
+                <h2>⚙️ Configuración del Espejo</h2>
+                <div class="card">
+                    <h3>Credenciales de ThingSpeak</h3>
+                    <p style="color: #8b949e; font-size: 0.9rem">Introduce tus datos de canal para habilitar la
+                        visualización remota.</p>
+
+                    <label class="lab">Channel ID</label>
+                    <input type="text" id="tsId" placeholder="Ej: 1234567">
+
+                    <label class="lab">Read API Key</label>
+                    <input type="password" id="tsKey" placeholder="Tu API Key de Lectura">
+                    <hr style="border:0; border-top:1px solid var(--border); margin:20px 0;">
+                    <h3>Alias de Sensores</h3>
+                    <label class="lab">Sensor 1 (L1)</label><input type="text" id="alias1" placeholder="Ej: Externo">
+                    <label class="lab">Sensor 2 (L2)</label><input type="text" id="alias2" placeholder="Ej: Mac">
+                    <label class="lab">Sensor 3 (L3)</label><input type="text" id="alias3" placeholder="Ej: Taller">
+                    <button class="btn" onclick="applySettings()">Guardar y Conectar</button>
+                </div>
             </div>
         </div>
     </div>
