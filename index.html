@@ -345,9 +345,10 @@
             data: {
                 labels: [],
                 datasets: [
-                    { label: 'S1', borderColor: '#32d1ff', tension: 0.4, borderAlpha: 0.5, data: [], pointRadius: 0 },
-                    { label: 'S2', borderColor: '#ff9d0a', tension: 0.4, data: [], pointRadius: 0 },
-                    { label: 'S3', borderColor: '#f85149', tension: 0.4, data: [], pointRadius: 0 }
+                    { label: 'S1', borderColor: '#32d1ff', tension: 0.4, borderAlpha: 0.5, data: [], pointRadius: 0, yAxisID: 'y' },
+                    { label: 'S2', borderColor: '#ff9d0a', tension: 0.4, data: [], pointRadius: 0, yAxisID: 'y' },
+                    { label: 'S3', borderColor: '#f85149', tension: 0.4, data: [], pointRadius: 0, yAxisID: 'y' },
+                    { label: 'Main Power (W)', borderColor: '#ffffff', tension: 0.4, data: [], pointRadius: 0, yAxisID: 'y1' }
                 ]
             },
             options: {
@@ -389,7 +390,20 @@
                 },
                 scales: {
                     x: { grid: { display: false }, ticks: { color: '#6e7681' } },
-                    y: { grid: { color: 'rgba(110, 118, 129, 0.1)' }, ticks: { color: '#6e7681' } }
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        grid: { color: 'rgba(110, 118, 129, 0.1)' },
+                        ticks: { color: '#6e7681' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: { drawOnChartArea: false }, // Avoid grid line overlap
+                        ticks: { color: '#ffffff' }
+                    }
                 }
             }
         });
@@ -422,6 +436,7 @@
                 chart.data.datasets[0].data = feeds.map(f => f.field1);
                 chart.data.datasets[1].data = feeds.map(f => f.field2);
                 chart.data.datasets[2].data = feeds.map(f => f.field3);
+                chart.data.datasets[3].data = feeds.map(f => f.field4);
                 chart.update();
                 const st = document.getElementById('status');
                 st.innerText = 'CONECTADO: ' + new Date().toLocaleTimeString();
